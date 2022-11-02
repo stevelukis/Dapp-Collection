@@ -60,6 +60,18 @@ describe("SplitPayment", () => {
 
         await expect(splitPayment.send(to, amounts, {value}))
             .to.be.revertedWith("to and amount array must have same length.")
-    })
+    });
+
+    it("Should not split payment if the caller is not the owner", async () => {
+        const recipients = [accounts[1], accounts[2], accounts[3]];
+        const to = recipients.map(recipient => recipient.address);
+        const amounts = [100, 200, 300];
+
+        // Total of amounts
+        const value = amounts.reduce((prevAmount, currentAmount) => prevAmount + currentAmount);
+
+        await expect(splitPayment.connect(accounts[1]).send(to, amounts, {value}))
+            .to.be.revertedWith("Only owner can call this function.")
+    });
 
 });

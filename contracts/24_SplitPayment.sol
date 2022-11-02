@@ -16,7 +16,7 @@ contract SplitPayment {
     }
 
     modifier onlyOwner() {
-        require(msg.sender == owner, "Only owner can call this function");
+        require(msg.sender == owner, "Only owner can call this function.");
         _;
     }
 }
