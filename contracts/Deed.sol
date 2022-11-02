@@ -6,7 +6,7 @@ contract Deed {
     address payable public beneficiary;
     uint256 public earliest;
 
-    constructor(address _lawyer, address payable _beneficiary, uint fromNow) payable {
+    constructor(address _lawyer, address payable _beneficiary, uint256 fromNow) payable {
         lawyer = _lawyer;
         beneficiary = _beneficiary;
         earliest = block.timestamp + fromNow;
