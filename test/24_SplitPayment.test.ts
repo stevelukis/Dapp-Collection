@@ -30,7 +30,7 @@ describe("SplitPayment", () => {
             return recipient.getBalance();
         }));
 
-        // Total of amount
+        // Total of amounts
         const value = amounts.reduce((prevAmount, currentAmount) => prevAmount + currentAmount);
 
         // Call the function
@@ -49,5 +49,17 @@ describe("SplitPayment", () => {
             expect(endBalance.sub(initialBalance)).to.be.equal(amounts[index])
         });
     });
+
+    it("Should not split payment if arrays length don't match", async () => {
+        const recipients = [accounts[1], accounts[2], accounts[3]];
+        const to = recipients.map(recipient => recipient.address);
+        const amounts = [100, 200];
+
+        // Total of amounts
+        const value = amounts.reduce((prevAmount, currentAmount) => prevAmount + currentAmount);
+
+        await expect(splitPayment.send(to, amounts, {value}))
+            .to.be.revertedWith("to and amount array must have same length.")
+    })
 
 });
